@@ -26,7 +26,7 @@ html[data-paused=true] .hero-plate img{animation-play-state:paused}
 .chapter-index,.making,footer{z-index:3}
 header{background:linear-gradient(#00141a66,transparent)}
 @media(max-width:700px){
- .opening-title{top:16%}.opening{min-height:820px}.opening .scene-plate{inset:30% 0 17%}.opening .scene-plate img{object-fit:cover;object-position:80% center}
+ .opening-title{top:16%}.opening{min-height:820px}.opening .scene-plate{inset:27% 0 14%;mask-image:linear-gradient(transparent,#000 20%,#000 76%,transparent)}.opening .scene-plate img{object-fit:cover;object-position:80% center}
  .opening::after{background:linear-gradient(180deg,rgba(0,16,24,.78),rgba(0,16,24,.48) 37%,transparent 55%,rgba(0,16,24,.88) 80%)}
  .passage{min-height:1000px}.passage .scene-plate{top:46%;mask-image:linear-gradient(transparent,#000 22%)}.passage .scene-plate img{object-position:90% center}
  .passage.right .scene-plate img{object-position:5% center}

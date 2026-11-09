@@ -1,0 +1,7 @@
+.impeccable/
+PRODUCT.md
+DESIGN.md
+direction.txt
+node_modules/
+.env
+*.log

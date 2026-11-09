@@ -25,7 +25,7 @@ light.x+=(pointer.x-light.x)*.07;light.y+=(pointer.y-light.y)*.07;const lamp=ctx
 for(const q of particles){const x=(q.x*w+Math.sin(t*.12+q.y*11)*14+w)%w,y=(q.y*h-t*q.s*5%h+h)%h;const near=Math.hypot(x-light.x,y-light.y)<w*.19;ctx.fillStyle=near?'rgba(234,216,159,.65)':'rgba(136,194,190,.3)';ctx.beginPath();ctx.arc(x,y,q.r,0,Math.PI*2);ctx.fill()}
 // Schools read as tiny silhouettes, not licensed animal art.
 ctx.strokeStyle='#8caaa659';ctx.lineWidth=1;for(let i=0;i<22;i++){let x=(w*.72+i*13+t*3)%w,y=h*.44+Math.sin(i*1.6)*40;ctx.beginPath();ctx.moveTo(x-3,y);ctx.quadraticCurveTo(x,y-3,x+5,y);ctx.lineTo(x+8,y-3);ctx.moveTo(x+5,y);ctx.lineTo(x+8,y+3);ctx.stroke()}
-const mobile=w<700;let vx=w*.58,vy=h*.64,sc=Math.min(w/1050,1.3);if(progress>.08){vx=w*(.59+Math.sin(progress*12)*.17);vy=h*(mobile?.79:.59);sc*=.76}vessel(vx,vy+Math.sin(t*.38)*3,sc,Math.sin(progress*6)*.08);
+const mobile=w<700;let vx=w*.58,vy=h*.64,sc=Math.min(w/1050,1.3);if(progress>.08){const second=document.querySelector('#chapter-two').getBoundingClientRect();const onRight=second.top<h*.5&&second.bottom>h*.5;vx=w*(mobile?.58:(onRight?.25:.78));vy=h*(mobile?.79:.65);sc*=mobile?.76:.64}vessel(vx,vy+Math.sin(t*.38)*3,sc,Math.sin(progress*6)*.08);
 // A distant seafloor comes into view near the closing passage.
 if(p>.5){ctx.globalAlpha=(p-.5)*1.5;ctx.fillStyle='#020f18';ctx.beginPath();ctx.moveTo(0,h);for(let x=0;x<=w+20;x+=20){ctx.lineTo(x,h-50-Math.sin(x*.004)*26-Math.sin(x*.013)*15)}ctx.lineTo(w,h);ctx.fill();ctx.globalAlpha=1}}
 function tick(now){if(!paused&&(!last||now-last>32)){t+=Math.min((now-last)/1000||.033,.1);last=now;draw()}if(!paused)frame=requestAnimationFrame(tick)}

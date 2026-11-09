@@ -1,6 +1,6 @@
 # Twenty Thousand Leagues
 
-A cinematic, static literary descent with an original Canvas Nautilus. Live: https://raj-microsoft.github.io/twenty-thousand-leagues/
+A cinematic, static literary descent with an original AI-generated Victorian submarine and interactive Canvas water. Live: https://raj-microsoft.github.io/twenty-thousand-leagues/
 
 Open `index.html` directly or serve this directory. No install or build step. Deployed with GitHub Pages from main /.
 
@@ -29,3 +29,10 @@ Short quotes verified in Project Gutenberg ebook 164, https://www.gutenberg.org/
 
 ## Verification
 Headless Edge at 1440 × 900 and 390 × 900; screenshot inspection; no horizontal overflow; zero page errors; local fonts loaded; chapter anchor works; audio toggle and motion pause state work; reduced motion honored. Source links checked with HTTP GET. Impeccable detector run with findings corrected before publishing.
+
+## Photoreal pass (2026-11-09)
+Four original ChatGPT image-generation plates follow the chapters: sunlit shallows, kelp twilight, bioluminescent deep blue, and abyssal wreck. The hero reuses the shallows plate. The same bronze spindle hull, low tower and amber portholes recur; no film design or text is used. Every generated source was visually inspected and its SHA-256 checked as unique.
+
+Gemini Veo reference upload failed for both JPEG and PNG in the approved browser session, before generation. The documented fallback is a subtle CSS hero push with procedural Canvas water/light/particles. There is no video payload. Reduced motion and Pause motion stop the animation. AI provenance and existing Gutenberg, guide and font credits remain on the page.
+
+Responsive WebP q78: 960px plates total 104,590 bytes; 1672px plates total 276,376 bytes; all eight files total 380,966 bytes. Below-fold images lazy-load with explicit dimensions and alt text.

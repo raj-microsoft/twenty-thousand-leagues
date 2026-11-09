@@ -5,27 +5,15 @@ let paused=reduce.matches,w=innerWidth,h=innerHeight,t=0,last=0,frame,depth=0,pr
 let pointer={x:w*.72,y:h*.62},light={...pointer};
 const particles=Array.from({length:170},(_,i)=>({x:((i*73.73)%997)/997,y:((i*47.47)%991)/991,r:.4+(i%6)*.23,s:.15+(i%7)*.07}));
 function size(){w=innerWidth;h=innerHeight;const d=Math.min(devicePixelRatio||1,2);canvas.width=w*d;canvas.height=h*d;canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(d,0,0,d,0,0);draw()}
-function path(points){ctx.beginPath();points(ctx)}
-function vessel(x,y,scale,angle){ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.scale(scale,scale);
-// Original lathe-like hull: curved metal bands, lit portholes, an observation deck.
-const beam=ctx.createLinearGradient(235,0,900,0);beam.addColorStop(0,'rgba(169,227,205,.14)');beam.addColorStop(1,'rgba(135,217,201,0)');ctx.fillStyle=beam;ctx.beginPath();ctx.moveTo(218,-9);ctx.lineTo(950,-220);ctx.lineTo(950,230);ctx.closePath();ctx.fill();
-const hull=ctx.createLinearGradient(0,-45,0,49);hull.addColorStop(0,'#274f52');hull.addColorStop(.24,'#66877d');hull.addColorStop(.45,'#294a49');hull.addColorStop(.72,'#102d33');hull.addColorStop(1,'#061b25');ctx.fillStyle=hull;ctx.strokeStyle='#78998b';ctx.lineWidth=1;
-ctx.beginPath();ctx.moveTo(-265,0);ctx.bezierCurveTo(-195,-60,115,-64,250,-7);ctx.lineTo(290,-2);ctx.lineTo(250,6);ctx.bezierCurveTo(120,68,-195,55,-265,0);ctx.fill();ctx.stroke();
-ctx.save();ctx.clip();ctx.strokeStyle='#97ad8b38';for(let i=-215;i<240;i+=28){ctx.beginPath();ctx.ellipse(i,0,15,53,0,0,Math.PI*2);ctx.stroke()}ctx.strokeStyle='#afc5a54f';ctx.beginPath();ctx.moveTo(-250,-5);ctx.bezierCurveTo(-130,-22,100,-25,248,-4);ctx.stroke();ctx.restore();
-ctx.fillStyle='#153940';ctx.strokeStyle='#7d9885';ctx.beginPath();ctx.moveTo(-70,-39);ctx.lineTo(-50,-68);ctx.quadraticCurveTo(-15,-80,25,-63);ctx.lineTo(43,-43);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#aec3a3';ctx.fillRect(-28,-87,5,21);ctx.fillRect(-29,-88,20,4);
-ctx.strokeStyle='#9fb49b';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(-115,-43);ctx.lineTo(-115,-58);ctx.lineTo(58,-58);ctx.lineTo(58,-43);ctx.stroke();for(let i=-99;i<57;i+=20){ctx.beginPath();ctx.moveTo(i,-58);ctx.lineTo(i,-44);ctx.stroke()}
-for(let i=-150;i<=150;i+=50){ctx.fillStyle='#b7985e';ctx.beginPath();ctx.ellipse(i,1,9,10,0,0,Math.PI*2);ctx.fill();const glass=ctx.createRadialGradient(i-2,-2,0,i,1,8);glass.addColorStop(0,'#fff0bd');glass.addColorStop(.6,'#a6d9c0');glass.addColorStop(1,'#365850');ctx.fillStyle=glass;ctx.beginPath();ctx.ellipse(i,1,6,7,0,0,Math.PI*2);ctx.fill()}
-ctx.fillStyle='#15353c';ctx.strokeStyle='#6b8a7c';ctx.beginPath();ctx.moveTo(-230,-11);ctx.lineTo(-270,-45);ctx.lineTo(-248,0);ctx.lineTo(-273,37);ctx.lineTo(-227,14);ctx.fill();ctx.stroke();ctx.fillStyle='#d5dfbd';ctx.beginPath();ctx.arc(245,-2,3,0,Math.PI*2);ctx.fill();ctx.restore()}
-function draw(){if(!ctx)return;let p=Math.min(progress,1);const bg=ctx.createLinearGradient(0,0,w*.5,h);bg.addColorStop(0,`rgb(${7-p*5},${67-p*54},${80-p*57})`);bg.addColorStop(.65,`rgb(3,${39-p*26},${54-p*32})`);bg.addColorStop(1,'#031721');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
+function draw(){if(!ctx)return;let p=Math.min(progress,1);ctx.clearRect(0,0,w,h);
 // Volumetric light shafts. They thin as the reader descends.
-ctx.save();ctx.globalAlpha=(1-p)*.09;for(let i=0;i<7;i++){const x=w*(.14+i*.14)+Math.sin(t*.1+i)*25;const ray=ctx.createLinearGradient(x,0,x+w*.12,h);ray.addColorStop(0,'#9bcec3');ray.addColorStop(1,'#8dc7c100');ctx.fillStyle=ray;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x+25,0);ctx.lineTo(x+w*.4,h);ctx.lineTo(x+w*.12,h);ctx.fill()}ctx.restore();
-// Surface wave reflections, always procedural and never image assets.
-ctx.strokeStyle=`rgba(166,219,207,${.09*(1-p)})`;for(let j=0;j<20;j++){ctx.beginPath();for(let x=0;x<w;x+=12){let y=25+j*5+Math.sin(x*.007+j*.7+t*.2)*(4+j*.6);x?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke()}
+ctx.save();ctx.globalAlpha=(1-p)*.025;for(let i=0;i<7;i++){const x=w*(.14+i*.14)+Math.sin(t*.1+i)*25;const ray=ctx.createLinearGradient(x,0,x+w*.12,h);ray.addColorStop(0,'#9bcec3');ray.addColorStop(1,'#8dc7c100');ctx.fillStyle=ray;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x+25,0);ctx.lineTo(x+w*.4,h);ctx.lineTo(x+w*.12,h);ctx.fill()}ctx.restore();
+// Procedural surface reflections layered above the photographic plates.
+ctx.strokeStyle=`rgba(166,219,207,${.025*(1-p)})`;for(let j=0;j<20;j++){ctx.beginPath();for(let x=0;x<w;x+=12){let y=25+j*5+Math.sin(x*.007+j*.7+t*.2)*(4+j*.6);x?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke()}
 light.x+=(pointer.x-light.x)*.07;light.y+=(pointer.y-light.y)*.07;const lamp=ctx.createRadialGradient(light.x,light.y,0,light.x,light.y,w*.25);lamp.addColorStop(0,'rgba(90,168,152,.09)');lamp.addColorStop(1,'rgba(90,168,152,0)');ctx.fillStyle=lamp;ctx.fillRect(0,0,w,h);
 for(const q of particles){const x=(q.x*w+Math.sin(t*.12+q.y*11)*14+w)%w,y=(q.y*h-t*q.s*5%h+h)%h;const near=Math.hypot(x-light.x,y-light.y)<w*.19;ctx.fillStyle=near?'rgba(234,216,159,.65)':'rgba(136,194,190,.3)';ctx.beginPath();ctx.arc(x,y,q.r,0,Math.PI*2);ctx.fill()}
 // Schools read as tiny silhouettes, not licensed animal art.
 ctx.strokeStyle='#8caaa659';ctx.lineWidth=1;for(let i=0;i<22;i++){let x=(w*.72+i*13+t*3)%w,y=h*.44+Math.sin(i*1.6)*40;ctx.beginPath();ctx.moveTo(x-3,y);ctx.quadraticCurveTo(x,y-3,x+5,y);ctx.lineTo(x+8,y-3);ctx.moveTo(x+5,y);ctx.lineTo(x+8,y+3);ctx.stroke()}
-const mobile=w<700;let vx=w*.58,vy=h*.64,sc=Math.min(w/1050,1.3);if(progress>.08){const second=document.querySelector('#chapter-two').getBoundingClientRect();const onRight=second.top<h*.5&&second.bottom>h*.5;vx=w*(mobile?.58:(onRight?.25:.78));vy=h*(mobile?.79:.65);sc*=mobile?.76:.64}vessel(vx,vy+Math.sin(t*.38)*3,sc,Math.sin(progress*6)*.08);
 // A distant seafloor comes into view near the closing passage.
 if(p>.5){ctx.globalAlpha=(p-.5)*1.5;ctx.fillStyle='#020f18';ctx.beginPath();ctx.moveTo(0,h);for(let x=0;x<=w+20;x+=20){ctx.lineTo(x,h-50-Math.sin(x*.004)*26-Math.sin(x*.013)*15)}ctx.lineTo(w,h);ctx.fill();ctx.globalAlpha=1}}
 function tick(now){if(!paused&&(!last||now-last>32)){t+=Math.min((now-last)/1000||.033,.1);last=now;draw()}if(!paused)frame=requestAnimationFrame(tick)}
